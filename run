@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if ! [ -e ssh_host_rsa_key ]; then
+  ssh-keygen -t rsa -f ssh_host_rsa_key -N "" -C "LoEESSH-rsa-host-key"
+fi
+
+if [ -e ~/.ssh/id_rsa.pub ]; then
+  echo "machid=test-client,sshport=52222 $(cat ~/.ssh/id_rsa.pub)" > authorized_keys
+fi
+
+go run server.go
